@@ -72,7 +72,8 @@ export default {
      currentType:'pop',
      isShowBackTop:false,
      tabOffSetTop:0,
-     isTabFixed:false
+     isTabFixed:false,
+     saveY:0
     }
   },
   computed:{
@@ -151,11 +152,17 @@ export default {
     loadMore(){
       this.getHomeGood(this.currentType)
     },
-
+    //获取图片加载完后，tabcontrol的offsettop位置
     swiperImageLoad(){
       this.tabOffSetTop=this.$refs.tabControl2.$el.offsetTop;
-
     }
+  },
+  activated() {
+    this.$refs.scroll.refresh()
+    this.$refs.scroll.scrollTo(0,this.saveY,0)
+  },
+  deactivated() {
+    this.saveY=this.$refs.scroll.getScrollY()
 
   }
 }
